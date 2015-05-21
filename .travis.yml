@@ -18,12 +18,21 @@ before_install:
 install:
   - if [ $TRAVIS_OS_NAME = linux ]; then
       if [ "$CXX" = "clang++" ]; then
-        export CXX=clang++-3.5;
+        export CXX=clang++-3.7;
       elif [ "$CXX" = "g++" ]; then
-        export CXX=g++-4.9;
+        export CXX=g++-5;
       fi;
     elif [ $TRAVIS_OS_NAME = osx ]; then
-       brew outdated boost || brew upgrade boost;
+      if [ "$CXX" = "clang++" ]; then
+        brew install llvm35 && brew link --force llvm35;
+        export CXX="clang++-3.5 -stdlib=libc++";
+        export CXXFLAGS="$CXXFLAGS -nostdinc++ -I/usr/local/opt/llvm35/lib/llvm-3.5/include/c++/v1";
+        export LDFLAGS="$LDFLAGS -L/usr/local/opt/llvm35/lib/llvm-3.5/lib";
+      elif [ "$CXX" = "g++" ]; then
+        brew outdated gcc || brew upgrade gcc;
+        brew unlink boost; brew install boost --cc=gcc-5;
+        export CXX=g++-5;
+      fi;
     fi;
 env:
   global:
@@ -34,11 +43,11 @@ addons:
     sources:
       - boost-latest
       - ubuntu-toolchain-r-test
-      - llvm-toolchain-precise-3.5
+      - llvm-toolchain-precise-3.7
     packages:
-      - clang-3.5
-      - libstdc++-4.9-dev
-      - g++-4.9
+      - libstdc++-5-dev
+      - g++-5
+      - clang-3.7
       - libncursesw5-dev
       - libboost-regex1.55-dev
   coverity_scan:
@@ -49,5 +58,10 @@ addons:
     build_command_prepend: "cd src && make clean"
     build_command: "make -j4"
     branch_pattern: coverity-scan
+
+matrix:
+  exclude:
+    - compiler: gcc
+      os: osx
 
 script: cd src && make && make test
