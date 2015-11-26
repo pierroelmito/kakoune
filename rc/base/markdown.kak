@@ -43,7 +43,7 @@ addhl -group /markdown/content regex \b_[^\n]+?_\b 0:italic
 addhl -group /markdown/content regex \B\*[^\n]+?\*\B 0:bold
 addhl -group /markdown/content regex <(([a-z]+://.*?)|((mailto:)?[\w+-]+@[a-z]+[.][a-z]+))> 0:link
 addhl -group /markdown/content regex ^\h*(>\h*)+ 0:comment
-addhl -group /markdown/content regex \H\K\h\h$ 0:PrimarySelection
+addhl -group /markdown/content regex \H(\h\h)$ 1:PrimarySelection
 
 # Commands
 # ‾‾‾‾‾‾‾‾
@@ -55,7 +55,7 @@ def -hidden _markdown_indent_on_new_line %{
         # remove trailing white spaces
         try %{ exec -draft -itersel %{ k<a-x> s \h+$ <ret> d } }
         # copy block quote(s), list item prefix and following white spaces
-        try %{ exec -draft k x s ^\h*\K((>\h*)|[*+-])+\h* <ret> y j p }
+        try %{ exec -draft k x 1s ^\h*(((>\h*)|[*+-])+\h*) <ret> y j p }
     }
 }
 

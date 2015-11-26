@@ -63,7 +63,7 @@ def -hidden _golang-indent-on-new-line %~
         # align to opening paren of previous line
         try %{ exec -draft [( <a-k> \`\([^\n]+\n[^\n]*\n?\' <ret> s \`\(\h*.|.\' <ret> '<a-;>' & }
         # copy // comments prefix
-        try %{ exec -draft \;<c-s>k<a-x> s ^\h*\K/{2,} <ret> y<c-o><c-o>P<esc> }
+        try %{ exec -draft \;<c-s>k<a-x> 1s ^\h*(/{2,}) <ret> y<c-o><c-o>P<esc> }
         # indent after a switch's case/default statements
         try %[ exec -draft k<a-x> <a-k> ^\h*(case|default).*:$ <ret> j<a-gt> ]
         # indent after if|else|while|for
