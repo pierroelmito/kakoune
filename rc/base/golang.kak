@@ -14,8 +14,8 @@ hook global BufCreate .*\.go %{
 
 addhl -group / regions -default code golang \
     back_string '`' '`' '' \
-    double_string '"' (?<!\\)(\\\\)*" '' \
-    single_string "'" (?<!\\)(\\\\)*' '' \
+    double_string '"' (^|[^\\])(\\\\)*\K" '' \
+    single_string "'" (^|[^\\])(\\\\)*\K' '' \
     comment /\* \*/ '' \
     comment '//' $ ''
 

@@ -18,8 +18,8 @@ hook global BufCreate .*[.](py) %{
 addhl -group / regions -default code python \
     double_string '"""' '"""'            '' \
     single_string "'''" "'''"            '' \
-    double_string '"'   (?<!\\)(\\\\)*"  '' \
-    single_string "'"   (?<!\\)(\\\\)*'  '' \
+    double_string '"'   (^|[^\\])(\\\\)*\K"  '' \
+    single_string "'"   (^|[^\\])(\\\\)*\K'  '' \
     comment       '#'   '$'              ''
 
 addhl -group /python/double_string fill string

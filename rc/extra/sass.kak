@@ -16,7 +16,7 @@ hook global BufCreate .*[.](sass) %{
 # ‾‾‾‾‾‾‾‾‾‾‾‾
 
 addhl -group / regions -default code sass \
-    string  '"' (?<!\\)(\\\\)*"        '' \
+    string  '"' (^|[^\\])(\\\\)*\K"    '' \
     string  "'" "'"                    '' \
     comment '/' '$'                    ''
 

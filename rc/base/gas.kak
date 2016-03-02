@@ -6,7 +6,7 @@ hook global BufCreate .*\.(s|S|asm)$ %{
 
 
 addhl -group / regions -default code gas \
-    string         '"' (?<!\\)(\\\\)*"        '' \
+    string         '"' (^|[^\\])(\\\\)*\K"      '' \
     commentMulti   /\*       \*/              '' \
     commentSingle1 '#'       '$'              '' \
     commentSingle2 ';'       '$'              ''

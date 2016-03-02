@@ -18,9 +18,9 @@ hook global BufCreate .*[.](moon) %{
 # ‾‾‾‾‾‾‾‾‾‾‾‾
 
 addhl -group / regions -default code moon \
-    double_string '"'  (?<!\\)(\\\\)*" '' \
-    single_string "'"  (?<!\\)(\\\\)*' '' \
-    comment       '--' '$'             '' \
+    double_string '"'  (^|[^\\])(\\\\)*\K" '' \
+    single_string "'"  (^|[^\\])(\\\\)*\K' '' \
+    comment       '--' '$'                 '' \
 
 addhl -group /moon/double_string fill string
 addhl -group /moon/double_string regions regions interpolation \Q#{ \} \{

@@ -29,7 +29,7 @@ addhl -group /html/script ref javascript
 addhl -group /html/tag regex </?(\w+) 1:keyword
 
 addhl -group /html/tag regions content \
-    string '"' (?<!\\)(\\\\)*"      '' \
+    string '"' (^|[^\\])(\\\\)*\K"  '' \
     string "'" "'"                  ''
 
 addhl -group /html/tag/content/string fill string

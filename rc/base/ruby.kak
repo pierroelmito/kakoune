@@ -18,10 +18,10 @@ hook global BufCreate .*(([.](rb))|(irbrc)|(pryrc)|(Capfile|[.]cap)|(Gemfile)|(G
 # ‾‾‾‾‾‾‾‾‾‾‾‾
 
 addhl -group / regions -default code ruby       \
-    double_string '"' (?<!\\)(\\\\)*"        '' \
-    single_string "'" (?<!\\)(\\\\)*'        '' \
-    backtick      '`' (?<!\\)(\\\\)*`        '' \
-    regex         '/' (?<!\\)(\\\\)*/[imox]* '' \
+    double_string '"' (^|[^\\])(\\\\)*\K"        '' \
+    single_string "'" (^|[^\\])(\\\\)*\K'        '' \
+    backtick      '`' (^|[^\\])(\\\\)*\K`        '' \
+    regex         '/' (^|[^\\])(\\\\)*\K/[imox]* '' \
     comment       '#' '$'                    '' \
     comment       ^begin= ^=end              '' \
     literal       '%[iqrswxIQRSWX]\(' \)     \( \

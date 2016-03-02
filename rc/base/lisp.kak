@@ -16,7 +16,7 @@ hook global BufCreate .*[.](lisp) %{
 # ‾‾‾‾‾‾‾‾‾‾‾‾
 
 addhl -group / regions -default code lisp \
-    string  '"' (?<!\\)(\\\\)*"        '' \
+    string  '"' (^|[^\\])(\\\\)*\K"    '' \
     comment ';' '$'                    ''
 
 addhl -group /lisp/string  fill string

@@ -16,7 +16,7 @@ hook global BufCreate .*[.](yaml) %{
 # ‾‾‾‾‾‾‾‾‾‾‾‾
 
 addhl -group / regions -default code yaml      \
-    double_string '"' (?<!\\)(\\\\)*"       '' \
+    double_string '"' (^|[^\\])(\\\\)*\K"   '' \
     single_string "'" "'"                   '' \
     comment       '#' '$'                   ''
 

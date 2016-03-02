@@ -4,8 +4,8 @@ hook global BufCreate .*\.ks %{
 
 addhl -group / regions -default code kickstart \
     comment (^|\h)\K\# $ '' \
-    double_string '"' (?<!\\)(\\\\)*" '' \
-    single_string "'" (?<!\\)(\\\\)*' '' \
+    double_string '"' (^|[^\\])(\\\\)*\K" '' \
+    single_string "'" (^|[^\\])(\\\\)*\K' '' \
     packages '^\h*\K%packages\b' '^\h*\K%end\b' '' \
     shell '^\h*\K%(pre|pre-install|post)\b' '^\h*\K%end\b' ''
 

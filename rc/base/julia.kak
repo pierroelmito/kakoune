@@ -12,7 +12,7 @@ hook global BufCreate .*\.(jl) %{
 # ‾‾‾‾‾‾‾‾‾‾‾‾
 
 addhl -group / regions -default code julia \
-    string  '"' (?<!\\)(\\\\)*"         '' \
+    string  '"' (^|[^\\])(\\\\)*\K"     '' \
     comment '#' '$'                     ''
 
 addhl -group /julia/string fill string

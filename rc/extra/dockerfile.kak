@@ -25,8 +25,8 @@ addhl -group /dockerfile/instruction regions regions                           \
     sh    '^(?i)(ONBUILD\h+)?(RUN|CMD|ENTRYPOINT)\h+([A-Z/a-z])+'       '$' ''
 
 addhl -group /dockerfile/instruction/regions/plain regions regions \
-    string '"' '(?<!\\)(\\\\)*"' ''                                \
-    string "'" "'"               ''
+    string '"' '(^|[^\\])(\\\\)*\K"' ''                                \
+    string "'" "'"                   ''
 
 addhl -group /dockerfile/instruction/regions/plain/regions/string fill string
 

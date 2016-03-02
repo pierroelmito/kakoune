@@ -16,7 +16,7 @@ hook global BufCreate .*[.](fish) %{
 # ‾‾‾‾‾‾‾‾‾‾‾‾
 
 addhl -group / regions -default code fish \
-    double_string '"' (?<!\\)(\\\\)*"  '' \
+    double_string '"' (^|[^\\])(\\\\)*"  '' \
     single_string "'" "'"              '' \
     comment       '#' '$'              ''
 

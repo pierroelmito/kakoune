@@ -16,10 +16,10 @@ hook global BufCreate .*[.](hs) %{
 # ‾‾‾‾‾‾‾‾‾‾‾‾
 
 addhl -group / regions -default code haskell \
-    string   '"'     (?<!\\)(\\\\)*"      '' \
+    string   '"'     (^|[^\\])(\\\\)*\K"  '' \
     comment  (--) $                       '' \
     comment \{-   -\}                    \{- \
-    macro   ^\h*?\K# (?<!\\)\n            ''
+    macro   ^\h*?\K# (^|[^\\])\K\n        ''
 
 addhl -group /haskell/string  fill string
 addhl -group /haskell/comment fill comment
