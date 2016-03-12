@@ -9,6 +9,7 @@
 #include "id_map.hh"
 #include "flags.hh"
 #include "enum.hh"
+#include "utils.hh"
 
 #include <tuple>
 #include <vector>

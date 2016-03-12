@@ -23,7 +23,7 @@ struct NormalCmdDesc
     void (*func)(Context& context, NormalParams params);
 };
 
-using KeyMap = const ArrayView<NormalCmdDesc>;
+using KeyMap = const ArrayView<const NormalCmdDesc>;
 extern KeyMap keymap;
 
 }

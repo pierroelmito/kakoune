@@ -734,10 +734,6 @@ int main(int argc, char* argv[])
     };
     try
     {
-        std::sort(keymap.begin(), keymap.end(),
-                  [](const NormalCmdDesc& lhs, const NormalCmdDesc& rhs)
-                  { return lhs.key < rhs.key; });
-
         ParametersParser parser(params, param_desc);
 
         if (parser.get_switch("l"))
