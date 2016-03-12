@@ -81,12 +81,6 @@ OnScopeEnd<T> on_scope_end(T t)
 
 // *** Misc helper functions ***
 
-template<typename T, typename... Args>
-std::unique_ptr<T> make_unique(Args&&... args)
-{
-    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
-}
-
 template<typename T>
 bool operator== (const std::unique_ptr<T>& lhs, T* rhs)
 {

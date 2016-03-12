@@ -57,7 +57,7 @@ else
     LDFLAGS += -rdynamic
 endif
 
-CXXFLAGS += -std=gnu++11 -g -Wall -Wno-reorder -Wno-sign-compare -Wno-address
+CXXFLAGS += -std=gnu++14 -g -Wall -Wno-reorder -Wno-sign-compare -Wno-address
 
 kak : $(objects)
 	$(CXX) $(LDFLAGS) $(CXXFLAGS) $(objects) $(LIBS) -o $@

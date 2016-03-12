@@ -85,7 +85,7 @@ private:
 };
 
 template<typename T, typename U>
-using PropagateConst = typename std::conditional<std::is_const<T>::value, const U, U>::type;
+using PropagateConst = std::conditional_t<std::is_const<T>::value, const U, U>;
 
 template<typename T>
 using SafePtr = RefPtr<T, PropagateConst<T, SafeCountable>>;

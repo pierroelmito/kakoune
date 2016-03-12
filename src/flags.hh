@@ -10,13 +10,13 @@ template<typename Flags>
 struct WithBitOps : std::false_type {};
 
 template<typename Flags>
-using UnderlyingType = typename std::underlying_type<Flags>::type;
+using UnderlyingType = std::underlying_type_t<Flags>;
 
 template<typename Flags, typename T = void>
-using EnableIfWithBitOps = typename std::enable_if<WithBitOps<Flags>::value, T>::type;
+using EnableIfWithBitOps = std::enable_if_t<WithBitOps<Flags>::value, T>;
 
 template<typename Flags, typename T = void>
-using EnableIfWithoutBitOps = typename std::enable_if<not WithBitOps<Flags>::value, T>::type;
+using EnableIfWithoutBitOps = std::enable_if_t<not WithBitOps<Flags>::value, T>;
 
 template<typename Flags, typename = EnableIfWithBitOps<Flags>>
 constexpr Flags operator|(Flags lhs, Flags rhs)
