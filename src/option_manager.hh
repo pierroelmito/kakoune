@@ -199,10 +199,9 @@ template<typename T> bool Option::is_of_type() const
 }
 
 template<typename T>
-auto find_option(T& container, StringView name) -> decltype(container.begin())
+auto find_option(T& container, StringView name)
 {
-    using ptr_type = decltype(*container.begin());
-    return find_if(container, [&name](const ptr_type& opt) { return opt->name() == name; });
+    return find_if(container, [&name](const auto& opt) { return opt->name() == name; });
 }
 
 class OptionsRegistry
@@ -219,7 +218,7 @@ public:
         auto it = find_option(opts, name);
         if (it != opts.end())
         {
-            if ((*it)->is_of_type<T>() and (*it)->flags() == flags)
+            if ((*it)->template is_of_type<T>() and (*it)->flags() == flags)
                 return **it;
             throw runtime_error(format("option '{}' already declared with different type or flags", name));
         }
