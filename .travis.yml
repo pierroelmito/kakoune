@@ -24,10 +24,10 @@ install:
       fi;
     elif [ $TRAVIS_OS_NAME = osx ]; then
       if [ "$CXX" = "clang++" ]; then
-        brew install llvm35 && brew link --force llvm35;
-        export CXX="clang++-3.5 -stdlib=libc++";
-        export CXXFLAGS="$CXXFLAGS -nostdinc++ -I/usr/local/opt/llvm35/lib/llvm-3.5/include/c++/v1";
-        export LDFLAGS="$LDFLAGS -L/usr/local/opt/llvm35/lib/llvm-3.5/lib";
+        brew install llvm36 && brew link --force llvm36;
+        export CXX="clang++-3.6 -stdlib=libc++";
+        export CXXFLAGS="$CXXFLAGS -nostdinc++ -I/usr/local/opt/llvm36/lib/llvm-3.6/include/c++/v1";
+        export LDFLAGS="$LDFLAGS -L/usr/local/opt/llvm36/lib/llvm-3.6/lib";
       elif [ "$CXX" = "g++" ]; then
         brew outdated gcc || brew upgrade gcc;
         brew unlink boost; brew install boost --cc=gcc-5;
