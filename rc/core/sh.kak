@@ -7,9 +7,9 @@ hook global BufSetOption mimetype=text/x-shellscript %{
 }
 
 addhl -group / regions -default code sh \
-    double_string %{(^|[^\\])(\\\\)*\K"} %{[^\\](\\\\)*\K"} '' \
-    single_string %{(^|[^\\])(\\\\)*\K'} %{'} '' \
-    comment '(^|[^\\])\K#' '$' ''
+    double_string %{(?:^|[^\\])(?:\\\\)*(")} %{[^\\](?:\\\\)*(")} '' \
+    single_string %{(?:^|[^\\])(?:\\\\)*(')} %{'} '' \
+    comment '(?:^|[^\\])(#)' '$' ''
 
 addhl -group /sh/double_string fill string
 addhl -group /sh/single_string fill string

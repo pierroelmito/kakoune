@@ -3,9 +3,9 @@ hook global BufCreate (.*/)?(kakrc|.*.kak) %{
 }
 
 addhl -group / regions -default code kakrc \
-    comment (^|\h)\K\# $ '' \
-    double_string %{(^|\h)"} %{(^|[^\\])(\\\\)*\K"} '' \
-    single_string %{(^|\h)'} %{(^|[^\\])(\\\\)*\K'} '' \
+    comment (?:^|\h)(\#) $ '' \
+    double_string %{(?:^|\h)(")} %{"} (?:^|[^\\])(?:\\\\)*()(?=\\") \
+    single_string %{(?:^|\h)(')} %{'} (?:^|[^\\])(?:\\\\)*()(?=\\') \
     shell '%sh\{' '\}' '\{'
 
 %sh{

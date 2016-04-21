@@ -7,7 +7,7 @@ hook global BufSetOption mimetype=text/java %{
 }
 
 addhl -group / regions -default code java \
-    string %{(^|[^']\K"} %{(^|[^\\])(\\\\)*\K"} '' \
+    string %{(?:^|[^'])(")} %{"} (?:^|[^\\])(?:\\\\)*()(?=\\") \
     comment /\* \*/ '' \
     comment // $ ''
 

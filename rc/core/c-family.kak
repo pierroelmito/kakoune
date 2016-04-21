@@ -79,11 +79,11 @@ def -hidden _c-family-indent-on-closing-curly-brace %[
 
         printf %s\\n '
             addhl -group / regions -default code FT \
-                string %{(^|[^QUOTE])MAYBEAT"} %{(^|[^\\])(\\\\)*\K"} "" \
+                string %{(?:^|[^QUOTE])MAYBEAT(")} %{"} (?:^|[^\\])(?:\\\\)*()(?=\\") \
                 comment /\* \*/ "" \
                 comment // $ "" \
-                disabled ^\h*?#\h*if\h+(0|FALSE)\b "#\h*(else|elif|endif)" "#\h*if(def)?" \
-                macro %{^\h*?\K#} %{\n} %{\\\n}
+                disabled ^\h*?#\h*if\h+(?:0|FALSE)\b "#\h*(?:else|elif|endif)" "#\h*if(?:def)?" \
+                macro %{^\h*?(#)} %{\n} %{\\\n}
 
             addhl -group /FT/string fill string
             addhl -group /FT/comment fill comment
