@@ -1073,13 +1073,14 @@ using RegexMatchList = Vector<RegexMatch, MemoryDomain::Highlight>;
 
 void find_matches(const Buffer& buffer, RegexMatchList& matches, const Regex& regex)
 {
+    auto index = regex.mark_count() > 0 ? 1 : 0;
     for (auto line = 0_line, end = buffer.line_count(); line < end; ++line)
     {
         auto l = buffer[line];
         for (RegexIterator<const char*> it{l.begin(), l.end(), regex}, end{}; it != end; ++it)
         {
-            ByteCount b = (int)((*it)[0].first - l.begin());
-            ByteCount e = (int)((*it)[0].second - l.begin());
+            ByteCount b = (int)((*it)[index].first - l.begin());
+            ByteCount e = (int)((*it)[index].second - l.begin());
             matches.push_back({ line, b, e });
         }
     }
