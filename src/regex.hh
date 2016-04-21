@@ -4,6 +4,8 @@
 #include "string.hh"
 #include "exception.hh"
 
+#define KAK_USE_STDREGEX
+
 #ifdef KAK_USE_STDREGEX
 #include <regex>
 #else
@@ -26,10 +28,7 @@ struct Regex : std::regex
 {
     Regex() = default;
 
-    explicit Regex(StringView re, flag_type flags = ECMAScript) try
-        : std::regex(re.begin(), re.end(), flags), m_str(re.str()) {}
-        catch (std::runtime_error& err) { throw regex_error(err.what()); }
-
+    explicit Regex(StringView re, flag_type flags = ECMAScript);
     bool empty() const { return m_str.empty(); }
     bool operator==(const Regex& other) const { return m_str == other.m_str; }
     bool operator!=(const Regex& other) const { return m_str != other.m_str; }
@@ -66,8 +65,8 @@ inline RegexConstant::match_flag_type match_flags(bool bol, bool eol, bool eow)
 {
     return (bol ? RegexConstant::match_default : RegexConstant::match_not_bol |
                                                  RegexConstant::match_prev_avail) |
-           (eol ? RegexConstant::match_default : RegexConstant::match_not_eol) |
-           (eow ? RegexConstant::match_default : RegexConstant::match_not_eow);
+           (eol ? RegexConstant::match_default : RegexConstant::match_not_eol);/* |
+           (eow ? RegexConstant::match_default : RegexConstant::match_not_eow);*/
 }
 
 String option_to_string(const Regex& re);
