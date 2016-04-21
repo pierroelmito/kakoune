@@ -1,5 +1,5 @@
 addhl regions -default code regions_test \
-    string %{"} %{(?<!\\)(\\\\)*"} '' \
+    string %{"} %{"} (?:^|[^\\])(?:\\\\)*()(?=\\") \
     shell '\$\{' '\}' '\{'
 
 addhl -group regions_test/code fill yellow

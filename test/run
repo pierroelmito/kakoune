@@ -32,7 +32,7 @@ main() {
           source rc
         }
         try %{
-          exec '%s%\(\K[^)]+<ret><c-s>ld<a-t>(hHdi<c-u><esc><c-o>'
+          exec '%1s%\(([^)]+)<ret><c-s>ld<a-t>(hHdi<c-u><esc><c-o>'
         } \
         catch %{
           exec gg
