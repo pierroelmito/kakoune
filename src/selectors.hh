@@ -228,7 +228,7 @@ inline bool find_last_match(const Buffer& buffer, const BufferIterator& pos,
     while (begin != pos and regex_search(begin, pos, matches, regex,
                                          match_flags(is_bol(begin.coord()), is_pos_eol, is_pos_eow)))
     {
-        begin = utf8::next(matches[0].first, pos);
+        begin = utf8::next(matches[0].first.base(), pos);
         if (res.empty() or matches[0].second > res[0].second)
             res.swap(matches);
     }
@@ -276,11 +276,11 @@ Selection find_next_match(const Buffer& buffer, const Selection& sel, const Rege
     auto pos = direction == Forward ? utf8::next(begin, buffer.end()) : begin;
     if ((found = find_match_in_buffer<direction>(buffer, pos, matches, regex, wrapped)))
     {
-        begin = ensure_char_start(buffer, matches[0].first);
-        end = ensure_char_start(buffer, matches[0].second);
+        begin = matches[0].first.base();
+        end = matches[0].second.base();
         for (auto& match : matches)
-            captures.push_back(buffer.string(match.first.coord(),
-                                             match.second.coord()));
+            captures.push_back(buffer.string(match.first.base().coord(),
+                                             match.second.base().coord()));
     }
     if (not found or begin == buffer.end())
         throw runtime_error(format("'{}': no matches found", regex.str()));

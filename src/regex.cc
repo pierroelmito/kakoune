@@ -74,11 +74,12 @@ UnitTest test_convert_regex{[] {
 Regex::Regex(StringView re, flag_type flags)
     : m_str(re.str())
 {
-    String patched_re = convert_regex(re, flags);
+    String expr = convert_regex(re, flags);
+    using Utf8It = utf8::iterator<const char*>;
 
     try
     {
-        assign(patched_re.begin(), patched_re.end(), flags);
+        assign(Utf8It{expr.begin(), expr}, Utf8It{expr.end(), expr}, flags);
     }
     catch (std::runtime_error& err)
     {

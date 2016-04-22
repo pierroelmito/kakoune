@@ -3,6 +3,7 @@
 
 #include "string.hh"
 #include "exception.hh"
+#include "utf8_iterator.hh"
 
 #include <regex>
 
@@ -17,7 +18,7 @@ struct regex_error : runtime_error
 };
 
 // Regex that keeps track of its string representation
-struct Regex : std::regex
+struct Regex : std::wregex
 {
     Regex() = default;
 
@@ -32,13 +33,22 @@ private:
     String m_str;
 };
 
-template<typename Iterator>
-using RegexIterator = std::regex_iterator<Iterator>;
-
-template<typename Iterator>
-using MatchResults = std::match_results<Iterator>;
-
 namespace RegexConstant = std::regex_constants;
+
+template<typename Iterator>
+struct RegexIterator : std::regex_iterator<utf8::iterator<Iterator>>
+{
+    using ParentType = std::regex_iterator<utf8::iterator<Iterator>>;
+    using Utf8It = utf8::iterator<Iterator>;
+
+    RegexIterator() = default;
+    RegexIterator(Iterator begin, Iterator end, const Regex& re,
+                  RegexConstant::match_flag_type flags = RegexConstant::match_default)
+        : ParentType{Utf8It{begin, begin, end}, Utf8It{end, begin, end}, re, flags} {}
+};
+
+template<typename Iterator>
+using MatchResults = std::match_results<utf8::iterator<Iterator>>;
 
 inline RegexConstant::match_flag_type match_flags(bool bol, bool eol, bool eow)
 {
@@ -46,6 +56,36 @@ inline RegexConstant::match_flag_type match_flags(bool bol, bool eol, bool eow)
                                                  RegexConstant::match_prev_avail) |
            (eol ? RegexConstant::match_default : RegexConstant::match_not_eol);/* |
            (eow ? RegexConstant::match_default : RegexConstant::match_not_eow);*/
+}
+
+template<typename It>
+bool regex_match(It begin, It end, const Regex& re)
+{
+    using Utf8It = utf8::iterator<It>;
+    return std::regex_match(Utf8It{begin, begin, end}, Utf8It{end, begin, end}, re);
+}
+
+template<typename It>
+bool regex_match(It begin, It end, MatchResults<It>& res, const Regex& re)
+{
+    using Utf8It = utf8::iterator<It>;
+    return std::regex_match(Utf8It{begin, begin, end}, Utf8It{end, begin, end}, res, re);
+}
+
+template<typename It>
+bool regex_search(It begin, It end, const Regex& re,
+                  RegexConstant::match_flag_type flags = RegexConstant::match_default)
+{
+    using Utf8It = utf8::iterator<It>;
+    return std::regex_search(Utf8It{begin, begin, end}, Utf8It{end, begin, end}, re);
+}
+
+template<typename It>
+bool regex_search(It begin, It end, MatchResults<It>& res, const Regex& re,
+                  RegexConstant::match_flag_type flags = RegexConstant::match_default)
+{
+    using Utf8It = utf8::iterator<It>;
+    return std::regex_search(Utf8It{begin, begin, end}, Utf8It{end, begin, end}, res, re);
 }
 
 String option_to_string(const Regex& re);

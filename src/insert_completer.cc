@@ -245,17 +245,17 @@ InsertCompletion complete_option(const SelectionList& sels,
     MatchResults<String::const_iterator> match;
     if (regex_match(desc.begin(), desc.end(), match, re))
     {
-        ByteCoord coord{ str_to_int({match[1].first, match[1].second}) - 1,
-                         str_to_int({match[2].first, match[2].second}) - 1 };
+        ByteCoord coord{ str_to_int({match[1].first.base(), match[1].second.base()}) - 1,
+                         str_to_int({match[2].first.base(), match[2].second.base()}) - 1 };
         if (not buffer.is_valid(coord))
             return {};
         auto end = cursor_pos;
         if (match[3].matched)
         {
-            ByteCount len = str_to_int({match[3].first, match[3].second});
+            ByteCount len = str_to_int({match[3].first.base(), match[3].second.base()});
             end = buffer.advance(coord, len);
         }
-        size_t timestamp = (size_t)str_to_int({match[4].first, match[4].second});
+        size_t timestamp = (size_t)str_to_int({match[4].first.base(), match[4].second.base()});
         auto changes = buffer.changes_since(timestamp);
         if (contains_that(changes, [&](const Buffer::Change& change)
                           { return change.begin < coord; }))

@@ -315,7 +315,8 @@ private:
             for (size_t i = 0; i < m_faces.size(); ++i)
             {
                 auto& sub = (*re_it)[m_faces[i].first];
-                matches.push_back({sub.first.coord(), sub.second.coord()});
+                matches.push_back({sub.first.base().coord(),
+                                   sub.second.base().coord()});
             }
         }
     }
@@ -1079,8 +1080,8 @@ void find_matches(const Buffer& buffer, RegexMatchList& matches, const Regex& re
         auto l = buffer[line];
         for (RegexIterator<const char*> it{l.begin(), l.end(), regex}, end{}; it != end; ++it)
         {
-            ByteCount b = (int)((*it)[index].first - l.begin());
-            ByteCount e = (int)((*it)[index].second - l.begin());
+            ByteCount b = (int)((*it)[index].first.base() - l.begin());
+            ByteCount e = (int)((*it)[index].second.base() - l.begin());
             matches.push_back({ line, b, e });
         }
     }
@@ -1126,8 +1127,8 @@ void update_matches(const Buffer& buffer, ConstArrayView<LineModification> modif
             auto l = buffer[line];
             for (RegexIterator<const char*> it{l.begin(), l.end(), regex}, end{}; it != end; ++it)
             {
-                ByteCount b = (int)((*it)[0].first - l.begin());
-                ByteCount e = (int)((*it)[0].second - l.begin());
+                ByteCount b = (int)((*it)[0].first.base() - l.begin());
+                ByteCount e = (int)((*it)[0].second.base() - l.begin());
                 matches.push_back({ line, b, e });
             }
         }

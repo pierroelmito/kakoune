@@ -87,7 +87,7 @@ Vector<String> generate_env(StringView cmdline, const Context& context, const Sh
     for (RegexIterator<const char*> it{cmdline.begin(), cmdline.end(), re}, end;
          it != end; ++it)
     {
-        StringView name{(*it)[1].first, (*it)[1].second};
+        StringView name{(*it)[1].first.base(), (*it)[1].second.base()};
 
         auto match_name = [&](const String& s) {
             return s.length() > name.length()  and
