@@ -7,8 +7,6 @@
 namespace Kakoune
 {
 
-#ifdef KAK_USE_STDREGEX
-
 static String convert_regex(StringView re, Regex::flag_type& flags)
 {
     if (re.substr(0_byte, 4_byte) == "(?i)")
@@ -87,8 +85,6 @@ Regex::Regex(StringView re, flag_type flags)
         throw regex_error(err.what());
     }
 }
-#endif
-
 
 String option_to_string(const Regex& re)
 {
