@@ -75,7 +75,7 @@ Regex::Regex(StringView re, flag_type flags)
     : m_str(re.str())
 {
     String expr = convert_regex(re, flags);
-    using Utf8It = utf8::iterator<const char*>;
+    using Utf8It = RegexUtf8It<const char*>;
 
     try
     {

@@ -33,13 +33,16 @@ private:
     String m_str;
 };
 
+template<typename It>
+using RegexUtf8It = utf8::iterator<It, wchar_t, ssize_t>;
+
 namespace RegexConstant = std::regex_constants;
 
 template<typename Iterator>
-struct RegexIterator : std::regex_iterator<utf8::iterator<Iterator>>
+struct RegexIterator : std::regex_iterator<RegexUtf8It<Iterator>>
 {
-    using ParentType = std::regex_iterator<utf8::iterator<Iterator>>;
-    using Utf8It = utf8::iterator<Iterator>;
+    using ParentType = std::regex_iterator<RegexUtf8It<Iterator>>;
+    using Utf8It = RegexUtf8It<Iterator>;
 
     RegexIterator() = default;
     RegexIterator(Iterator begin, Iterator end, const Regex& re,
@@ -48,7 +51,7 @@ struct RegexIterator : std::regex_iterator<utf8::iterator<Iterator>>
 };
 
 template<typename Iterator>
-using MatchResults = std::match_results<utf8::iterator<Iterator>>;
+using MatchResults = std::match_results<RegexUtf8It<Iterator>>;
 
 inline RegexConstant::match_flag_type match_flags(bool bol, bool eol, bool eow)
 {
@@ -61,14 +64,14 @@ inline RegexConstant::match_flag_type match_flags(bool bol, bool eol, bool eow)
 template<typename It>
 bool regex_match(It begin, It end, const Regex& re)
 {
-    using Utf8It = utf8::iterator<It>;
+    using Utf8It = RegexUtf8It<It>;
     return std::regex_match(Utf8It{begin, begin, end}, Utf8It{end, begin, end}, re);
 }
 
 template<typename It>
 bool regex_match(It begin, It end, MatchResults<It>& res, const Regex& re)
 {
-    using Utf8It = utf8::iterator<It>;
+    using Utf8It = RegexUtf8It<It>;
     return std::regex_match(Utf8It{begin, begin, end}, Utf8It{end, begin, end}, res, re);
 }
 
@@ -76,7 +79,7 @@ template<typename It>
 bool regex_search(It begin, It end, const Regex& re,
                   RegexConstant::match_flag_type flags = RegexConstant::match_default)
 {
-    using Utf8It = utf8::iterator<It>;
+    using Utf8It = RegexUtf8It<It>;
     return std::regex_search(Utf8It{begin, begin, end}, Utf8It{end, begin, end}, re);
 }
 
@@ -84,7 +87,7 @@ template<typename It>
 bool regex_search(It begin, It end, MatchResults<It>& res, const Regex& re,
                   RegexConstant::match_flag_type flags = RegexConstant::match_default)
 {
-    using Utf8It = utf8::iterator<It>;
+    using Utf8It = RegexUtf8It<It>;
     return std::regex_search(Utf8It{begin, begin, end}, Utf8It{end, begin, end}, res, re);
 }
 

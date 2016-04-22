@@ -6,7 +6,7 @@
 namespace Kakoune
 {
 
-using Codepoint = wchar_t;
+using Codepoint = char32_t;
 
 inline bool is_eol(Codepoint c)
 {
