@@ -55,10 +55,11 @@ using MatchResults = std::match_results<RegexUtf8It<Iterator>>;
 
 inline RegexConstant::match_flag_type match_flags(bool bol, bool eol, bool eow)
 {
+    return RegexConstant::match_default;
     return (bol ? RegexConstant::match_default : RegexConstant::match_not_bol |
                                                  RegexConstant::match_prev_avail) |
-           (eol ? RegexConstant::match_default : RegexConstant::match_not_eol);/* |
-           (eow ? RegexConstant::match_default : RegexConstant::match_not_eow);*/
+           (eol ? RegexConstant::match_default : RegexConstant::match_not_eol) |
+           (eow ? RegexConstant::match_default : RegexConstant::match_not_eow);
 }
 
 template<typename It>
